@@ -73,6 +73,20 @@ Automated provisioning script for setting up a lightweight, headless **Debian** 
 3. **Optional dependencies for `health`:**
    ```bash
    sudo pacman -S lm_sensors smartmontools
+
+### 6. setup-toggle-xfce-theme.sh
+
+Automated setup script that installs a 1-click Light/Dark theme switcher (`~/.local/bin/toggle-xfce-theme.sh`) and adds a corresponding toggle button directly to the **XFCE Panel**.
+
+**Features:**
+- **Full Desktop Toggle:** Switches GTK style (`Matcha-light-aliz` / `Matcha-dark-aliz`), window manager borders, icon themes (`Papirus-Light` / `Papirus-Dark`), and desktop wallpaper simultaneously via `xfconf-query`.
+- **1-Click Panel Integration:** Automatically creates the `.desktop` launcher entry and registers it on `panel-1` so you can flip themes from the panel with zero background RAM usage.
+
+**Usage:**
+```bash
+./setup-toggle-xfce-theme.sh
+```
+
    sudo sensors-detect --auto
    ```
    *(Optional)* Allow passwordless S.M.A.R.T. checks without running `sudo health`:
