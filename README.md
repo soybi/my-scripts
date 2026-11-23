@@ -55,7 +55,7 @@ Automated provisioning script for setting up a lightweight, headless **Debian** 
 
 ---
 
-### 6. setup-toggle-xfce-theme.sh
+### 6. `setup-toggle-xfce-theme.sh`
 
 Automated setup script that installs a 1-click Light/Dark theme switcher (`~/.local/bin/toggle-xfce-theme.sh`) and adds a corresponding toggle button directly to the **XFCE Panel**.
 
