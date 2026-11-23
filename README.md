@@ -72,7 +72,7 @@ Automated setup script that installs a 1-click Light/Dark theme switcher (`~/.lo
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com ~/my-scripts
+   git clone https://github.com/soybi/my-scripts.git ~/my-scripts
    cd ~/my-scripts
    ```
 
