@@ -73,7 +73,13 @@ Automated provisioning script for setting up a lightweight, headless **Debian** 
 3. **Optional dependencies for `health`:**
    ```bash
    sudo pacman -S lm_sensors smartmontools
-
+   ```
+   sudo sensors-detect --auto
+   ```
+   *(Optional)* Allow passwordless S.M.A.R.T. checks without running `sudo health`:
+   ```bash
+   echo "\$USER ALL=(ALL) NOPASSWD: /usr/bin/smartctl" | sudo tee /etc/sudoers.d/smartctl > /dev/null
+   ```
 ### 6. setup-toggle-xfce-theme.sh
 
 Automated setup script that installs a 1-click Light/Dark theme switcher (`~/.local/bin/toggle-xfce-theme.sh`) and adds a corresponding toggle button directly to the **XFCE Panel**.
@@ -85,11 +91,3 @@ Automated setup script that installs a 1-click Light/Dark theme switcher (`~/.lo
 **Usage:**
 ```bash
 ./setup-toggle-xfce-theme.sh
-```
-
-   sudo sensors-detect --auto
-   ```
-   *(Optional)* Allow passwordless S.M.A.R.T. checks without running `sudo health`:
-   ```bash
-   echo "\$USER ALL=(ALL) NOPASSWD: /usr/bin/smartctl" | sudo tee /etc/sudoers.d/smartctl > /dev/null
-   ```
