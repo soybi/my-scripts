@@ -80,8 +80,11 @@ xfconf-query -c xsettings -p /Net/IconThemeName -s "$TARGET_ICONS"
 xfconf-query -c xfwm4 -p /general/theme -s "$TARGET_WM"
 
 if command -v gsettings >/dev/null 2>&1; then
-    gsettings set org.gnome.desktop.interface color-scheme "$COLOR_SCHEME" 2>/dev/null
-    gsettings set org.gnome.desktop.interface gtk-theme "$TARGET_GTK" 2>/dev/null
+    gsettings set org.gnome.desktop.interface color-scheme "$COLOR_SCHEME" 2>/dev/null || true
+    gsettings set org.gnome.desktop.interface gtk-theme "$TARGET_GTK" 2>/dev/null || true
+elif command -v dconf >/dev/null 2>&1; then
+    dconf write /org/gnome/desktop/interface/color-scheme "'$COLOR_SCHEME'" 2>/dev/null || true
+    dconf write /org/gnome/desktop/interface/gtk-theme "'$TARGET_GTK'" 2>/dev/null || true
 fi
 EOF
 

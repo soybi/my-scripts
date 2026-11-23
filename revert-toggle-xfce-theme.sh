@@ -72,6 +72,9 @@ if [ "${1:-}" = "--reset-theme" ]; then
     if command -v gsettings >/dev/null 2>&1; then
         gsettings set org.gnome.desktop.interface color-scheme "prefer-dark" 2>/dev/null || true
         gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark" 2>/dev/null || true
+    elif command -v dconf >/dev/null 2>&1; then
+        dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'" 2>/dev/null || true
+        dconf write /org/gnome/desktop/interface/gtk-theme "'Adwaita-dark'" 2>/dev/null || true
     fi
     echo "Reset theme to Adwaita-dark / elementary"
 fi
