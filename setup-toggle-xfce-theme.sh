@@ -89,9 +89,10 @@ chmod +x "$SCRIPT_PATH"
 
 # Create Xfce Panel Launcher only if one does not already exist
 if ! grep -rl "toggle-xfce-theme.sh" "$HOME/.config/xfce4/panel/" >/dev/null 2>&1; then
-    PANEL_ID=1
-    NEXT_ID=$(xfconf-query -c xfce4-panel -p /plugins -l | grep -oE 'plugin-[0-9]+' | cut -d- -f2 | sort -n | tail -1)
-    NEXT_ID=$((NEXT_ID + 1))
+    PANEL_ID=$(xfconf-query -c xfce4-panel -p /panels 2>/dev/null | grep -E '^[0-9]+$' | sort -n | head -n 1)
+    PANEL_ID=${PANEL_ID:-1}
+    LAST_ID=$(xfconf-query -c xfce4-panel -p /plugins -l 2>/dev/null | grep -oE 'plugin-[0-9]+' | cut -d- -f2 | sort -n | tail -1)
+    NEXT_ID=$(( ${LAST_ID:-0} + 1 ))
     LAUNCHER_DIR="$HOME/.config/xfce4/panel/launcher-$NEXT_ID"
 
     mkdir -p "$LAUNCHER_DIR"

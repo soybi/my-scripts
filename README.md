@@ -61,7 +61,7 @@ Automated setup script that installs a 1-click Light/Dark theme switcher (`~/.lo
 
 **Features:**
 - **Full Desktop Toggle:** Automatically detects your active GTK style, window manager borders, and icon theme (`-light`/`-dark` variants with fallback defaults) and switches them simultaneously via `xfconf-query` without altering your wallpaper, while syncing the XDG `color-scheme` via `gsettings` so Firefox and GTK4/libadwaita apps follow the toggle.
-- **1-Click Panel Integration:** Automatically creates the `.desktop` launcher entry and registers it on `panel-1` so you can flip themes from the panel with zero background RAM usage.
+- **1-Click Panel Integration:** Automatically creates the `.desktop` launcher entry and registers it on your primary Xfce panel so you can flip themes from the panel with zero background RAM usage.
 
 **Usage:**
 
