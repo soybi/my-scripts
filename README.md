@@ -64,8 +64,11 @@ Automated setup script that installs a 1-click Light/Dark theme switcher (`~/.lo
 - **1-Click Panel Integration:** Automatically creates the `.desktop` launcher entry and registers it on `panel-1` so you can flip themes from the panel with zero background RAM usage.
 
 **Usage:**
+
 ```bash
-./setup-toggle-xfce-theme.sh
+./setup-toggle-xfce-theme.sh                  # Install toggle script and add panel launcher
+./revert-toggle-xfce-theme.sh                 # Remove toggle script and panel launcher
+./revert-toggle-xfce-theme.sh --reset-theme   # Remove everything and reset to Matcha-dark-aliz
 ```
 
 ## Quick Installation
