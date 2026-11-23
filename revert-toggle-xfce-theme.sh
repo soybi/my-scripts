@@ -66,14 +66,14 @@ fi
 
 # 5. Optional theme reset to default dark preset
 if [ "${1:-}" = "--reset-theme" ]; then
-    xfconf-query -c xsettings -p /Net/ThemeName -s "Matcha-dark-aliz"
-    xfconf-query -c xsettings -p /Net/IconThemeName -s "Papirus-Dark"
-    xfconf-query -c xfwm4 -p /general/theme -s "Matcha-dark-aliz"
+    xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita-dark"
+    xfconf-query -c xsettings -p /Net/IconThemeName -s "elementary"
+    xfconf-query -c xfwm4 -p /general/theme -s "Adwaita-dark"
     if command -v gsettings >/dev/null 2>&1; then
         gsettings set org.gnome.desktop.interface color-scheme "prefer-dark" 2>/dev/null || true
-        gsettings set org.gnome.desktop.interface gtk-theme "Matcha-dark-aliz" 2>/dev/null || true
+        gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark" 2>/dev/null || true
     fi
-    echo "Reset theme to Matcha-dark-aliz / Papirus-Dark"
+    echo "Reset theme to Adwaita-dark / elementary"
 fi
 
 echo "Reversal complete."

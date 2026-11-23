@@ -9,10 +9,10 @@ mkdir -p "$BIN_DIR"
 cat << 'EOF' > "$SCRIPT_PATH"
 #!/usr/bin/env bash
 
-FALLBACK_LIGHT_GTK="Matcha-light-aliz"
-FALLBACK_DARK_GTK="Matcha-dark-aliz"
-FALLBACK_LIGHT_ICONS="Papirus-Light"
-FALLBACK_DARK_ICONS="Papirus-Dark"
+FALLBACK_LIGHT_GTK="Adwaita"
+FALLBACK_DARK_GTK="Adwaita-dark"
+FALLBACK_LIGHT_ICONS="elementary"
+FALLBACK_DARK_ICONS="elementary"
 
 theme_exists() {
     local name="$1"

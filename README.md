@@ -68,7 +68,7 @@ Automated setup script that installs a 1-click Light/Dark theme switcher (`~/.lo
 ```bash
 ./setup-toggle-xfce-theme.sh                  # Install toggle script and add panel launcher
 ./revert-toggle-xfce-theme.sh                 # Remove toggle script and panel launcher
-./revert-toggle-xfce-theme.sh --reset-theme   # Remove everything and reset to Matcha-dark-aliz
+./revert-toggle-xfce-theme.sh --reset-theme   # Remove everything and reset to Adwaita-dark
 ```
 
 ## Quick Installation
