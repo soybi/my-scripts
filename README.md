@@ -31,7 +31,7 @@ NO_COLOR=1 linux-health.sh       # Disable colored output
 
 ---
 
-### 2. `scrolllock.sh` (and `cachyos-xfce-scrolllock-led-bundle.zip`)
+### 2. `scrolllock.sh (for debian)` and (`cachyos-xfce-scrolllock-led-bundle.zip`)
 Configures keyboard Scroll Lock LED toggling on X11/XFCE desktop environments (commonly required for backlit budget/gaming keyboards on Linux).
 
 **Usage:**
