@@ -36,8 +36,8 @@ Configures keyboard Scroll Lock LED toggling on X11/XFCE desktop environments (c
 
 **Usage:**
 ```bash
-chmod +x scrolllock.sh
-./scrolllock.sh
+chmod +x debian-scrolllock-led.sh
+./debian-scrolllock-led.sh
 ```
 
 ---
