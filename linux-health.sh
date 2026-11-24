@@ -19,6 +19,8 @@ usage() {
     echo "Options:"
     echo "  --ip                Show local and public IP addresses (hidden by default)"
     echo "  -e, --export [FILE] Export report to a formatted text file (defaults to timestamped filename)"
+    echo "  --install           Install 'health' command to ~/.local/bin and configure PATH"
+    echo "  --uninstall         Remove 'health' symlink from ~/.local/bin"
     echo "  -h, --help          Show this help message"
     echo
     echo "Environment:"
@@ -27,6 +29,33 @@ usage() {
 
 while [[ $# -gt 0 ]]; do
     case $1 in
+        --install)
+            SCRIPT_PATH="$(cd "$(dirname "${BASH_SOURCE}")" && pwd)/$(basename "${BASH_SOURCE}")"
+            chmod +x "$SCRIPT_PATH"
+            mkdir -p "$HOME/.local/bin"
+            ln -sf "$SCRIPT_PATH" "$HOME/.local/bin/health"
+            for rc in "$HOME/.bashrc" "$HOME/.zshrc"; do
+                if [ -f "$rc" ] && ! grep -qE '(\$HOME|~)/\.local/bin' "$rc"; then
+                    printf '
+export PATH="\$HOME/.local/bin:\$PATH"
+' >> "$rc"
+                fi
+            done
+            if command -v fish >/dev/null 2>&1; then
+                fish -c "fish_add_path -g "$HOME/.local/bin"" 2>/dev/null || true
+            fi
+            echo "Installed: $HOME/.local/bin/health -> $SCRIPT_PATH"
+            case ":$PATH:" in
+                *":$HOME/.local/bin:"*) echo "Ready! Type 'health' in your terminal to run." ;;
+                *) echo "Note: Restart your terminal (or run: export PATH="\$HOME/.local/bin:\$PATH") and type 'health'." ;;
+            esac
+            exit 0
+            ;;
+        --uninstall)
+            rm -f "$HOME/.local/bin/health"
+            echo "Removed $HOME/.local/bin/health"
+            exit 0
+            ;;
         --ip)
             SHOW_IP=true
             shift

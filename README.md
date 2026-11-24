@@ -84,13 +84,12 @@ Automated setup script that installs a 1-click Light/Dark theme switcher (`~/.lo
    cd ~/my-scripts
    ```
 
-2. **Make scripts executable and symlink `linux-health.sh` to your local binary path as `health`:**
+2. **Make scripts executable and auto-install `linux-health.sh` as `health`:**
    ```bash
    chmod +x ~/my-scripts/*
-   mkdir -p ~/.local/bin
-   ln -sf ~/my-scripts/linux-health.sh ~/.local/bin/health
+   ~/my-scripts/linux-health.sh --install
    ```
-   *(Make sure `~/.local/bin` is in your `PATH`.)*
+   *(Symlinks `~/.local/bin/health` and automatically adds `~/.local/bin` to `PATH` for Bash, Zsh, and Fish.)*
 
 3. **Optional dependencies for `linux-health.sh`:**
 
