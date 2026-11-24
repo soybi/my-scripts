@@ -324,7 +324,7 @@ run_checks() {
 
     printf '\n%sDrive Health (S.M.A.R.T.):%s\n' "$BOLD" "$RESET"
     if have smartctl; then
-        local dev SMART_OUT STATUS TEMP WEAR HOURS STATUS_COLOR DETAILS
+        local dev MODEL SMART_OUT STATUS TEMP WEAR HOURS STATUS_COLOR DETAILS
         local any_disk=false
         while IFS= read -r dev; do
             [ -z "$dev" ] && continue
@@ -344,6 +344,9 @@ run_checks() {
             fi
 
             if echo "$SMART_OUT" | grep -qE "PASSED|OK|FAILED"; then
+                MODEL=""
+                if have lsblk; then MODEL=$(lsblk -dn -o MODEL "$dev" 2>/dev/null | xargs); fi
+                [ -z "$MODEL" ] && MODEL=$(echo "$SMART_OUT" | awk -F": +" "/Device Model|Model Number|Product/ {print \$2; exit}" | xargs)
                 STATUS=$(echo "$SMART_OUT" | grep -E "SMART overall-health|SMART Health Status" | awk -F': ' '{print $2}' | xargs)
                 TEMP=$(echo "$SMART_OUT" | awk '/Temperature:/ {print $2"°C"; exit} /Temperature_Celsius/ {print $10"°C"; exit}')
                 WEAR=$(echo "$SMART_OUT" | awk '/Percentage Used:/ {gsub(/%/,"",$3); print 100-$3"% life left"; exit} /Wear_Leveling_Count|Media_Wearout_Indicator/ {print $4+0"% life left"; exit}')
@@ -371,6 +374,13 @@ run_checks() {
         fi
     else
         printf '  %ssmartmontools not installed (install with: %s)%s\n' "$YELLOW" "$(smartmontools_hint)" "$RESET"
+    fi
+
+    if have lsblk; then
+        printf '
+%sBlock Devices:%s
+' "$BOLD" "$RESET"
+        lsblk -o NAME,SIZE,FSTYPE,LABEL,MOUNTPOINT -e 7 2>/dev/null | sed 's/^/  /'
     fi
 
     # 6. Network & Internet
@@ -454,6 +464,36 @@ run_checks() {
         local INIT_NAME
         INIT_NAME=$(cat /proc/1/comm 2>/dev/null)
         printf '%sInit:%s     %s (not systemd — service check skipped)\n' "$BOLD" "$RESET" "${INIT_NAME:-unknown}"
+    fi
+
+    if have systemctl && [ -d /run/systemd/system ]; then
+        local svc label state
+        for svc in smbd:Samba fstrim.timer:SSD_TRIM tailscaled:Tailscale; do
+            label="${svc#*:}"; label="${label//_/ }"; svc="${svc%%:*}"
+            if systemctl list-unit-files "$svc*" 2>/dev/null | grep -q "^$svc"; then
+                state=$(systemctl is-active "$svc" 2>/dev/null)
+                if [ "$state" = "active" ]; then
+                    printf '  %-14s %s%s%s
+' "$label:" "$GREEN" "$state" "$RESET"
+                else
+                    printf '  %-14s %s%s%s
+' "$label:" "$YELLOW" "${state:-inactive}" "$RESET"
+                fi
+            fi
+        done
+    fi
+
+    if have docker && docker info >/dev/null 2>&1; then
+        local CONTAINERS
+        CONTAINERS=$(docker ps -a --format "table {{.Names}}	{{.Status}}" 2>/dev/null)
+        if [ -n "$CONTAINERS" ] && [ "$(printf '%s
+' "$CONTAINERS" | wc -l)" -gt 1 ]; then
+            printf '
+%sDocker Containers:%s
+' "$BOLD" "$RESET"
+            printf '%s
+' "$CONTAINERS" | sed 's/^/  /'
+        fi
     fi
 
     local PM ORPHANS="" CACHE_DIR=""
