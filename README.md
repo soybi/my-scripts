@@ -6,25 +6,28 @@ A personal collection of Bash utilities, hardware workarounds, and automated sys
 
 ## Included Scripts
 
-### 1. `health` — CachyOS System Health Reporter
-A lightweight, dependency-minimal terminal diagnostic tool tailored for CachyOS/Arch systems.
+### 1. `linux-health.sh` — Cross-Distro Linux System Health Reporter
+A lightweight, dependency-minimal terminal diagnostic tool that works on **any mainstream Linux distribution**: Arch/CachyOS, Debian/Ubuntu, Fedora/RHEL, openSUSE, Alpine, Void, and their derivatives. It uses optional tools when they are installed and skips them gracefully when they are not, so it runs cleanly on minimal installs, VMs, and containers too.
 
 **Features:**
-- **System & Kernel:** Displays OS release, active kernel version, and uptime.
-- **CPU, Load & Temperatures:** Shows CPU model, live utilization percentage, load averages, and hardware sensor temperatures (`lm_sensors` / thermal zones).
-- **GPU Detection:** Lists single or dual-GPU configurations (Intel iGPU + NVIDIA dGPU) and live NVIDIA metrics when available.
-- **Memory & ZRAM:** Summarizes RAM/Swap usage and CachyOS `zstd` ZRAM compression stats.
-- **Storage & S.M.A.R.T.:** Reports physical partition usage (filtering out virtual/overlay filesystems), masks SMB network share IPs by default, and queries drive S.M.A.R.T. health, temperatures, and power-on hours.
-- **Network & Internet:** Checks active interface, ICMP latency, and DNS resolution while keeping local and public IP addresses hidden by default.
-- **Systemd & Package Health:** Flags failed systemd units, orphan packages, and `pacman` cache disk usage.
+- **System & Kernel:** Displays the distro name (from `/etc/os-release`), kernel version, architecture, and uptime.
+- **CPU, Load & Temperatures:** Shows CPU model, live utilization sampled from `/proc/stat`, load averages, and hardware sensor temperatures (`lm_sensors`, falling back to `/sys/class/thermal`).
+- **GPU Detection:** Lists single or dual-GPU configurations (Intel iGPU + NVIDIA dGPU) and live NVIDIA metrics when available. Falls back to sysfs vendor detection if `lspci` is missing.
+- **Memory & Swap/ZRAM:** Summarizes RAM and swap usage from `/proc/meminfo`, plus ZRAM stats when `zramctl` reports active devices.
+- **Storage & S.M.A.R.T.:** Reports physical partition usage (filtering out virtual filesystems), masks SMB network share IPs by default, and queries drive S.M.A.R.T. health, temperatures, wear, and power-on hours.
+- **Network & Internet:** Checks the active interface, ICMP latency, and DNS resolution while keeping local and public IP addresses hidden by default.
+- **Services & Package Health:** Flags failed systemd units (skipped automatically on non-systemd distros) and reports unused packages and package cache size for `pacman`, `apt`, `dnf`, `zypper`, `apk`, and `xbps`.
 
 **Usage:**
 ```bash
-health                  # Run full health check (IPs hidden for screenshot privacy)
-health --ip             # Reveal local LAN IP, public WAN IP, and SMB share IPs
-health --export         # Save a clean plain-text report (health-report-YYYYMMDD-HHMMSS.txt)
-health -e ~/report.txt  # Export report to a custom file path
+linux-health.sh                  # Run full health check (IPs hidden for screenshot privacy)
+linux-health.sh --ip             # Reveal local LAN IP, public WAN IP, and SMB share IPs
+linux-health.sh --export         # Save a clean plain-text report (health-report-YYYYMMDD-HHMMSS.txt)
+linux-health.sh -e ~/report.txt  # Export report to a custom file path
+NO_COLOR=1 linux-health.sh       # Disable colored output
 ```
+
+> If you followed the symlink step in [Quick Installation](#quick-installation), the command is simply `health` instead of `linux-health.sh`.
 
 ---
 
@@ -81,19 +84,37 @@ Automated setup script that installs a 1-click Light/Dark theme switcher (`~/.lo
    cd ~/my-scripts
    ```
 
-2. **Make scripts executable and symlink `health` to your local binary path:**
+2. **Make scripts executable and symlink `linux-health.sh` to your local binary path as `health`:**
    ```bash
    chmod +x ~/my-scripts/*
    mkdir -p ~/.local/bin
-   ln -sf ~/my-scripts/health ~/.local/bin/health
+   ln -sf ~/my-scripts/linux-health.sh ~/.local/bin/health
    ```
+   *(Make sure `~/.local/bin` is in your `PATH`.)*
 
-3. **Optional dependencies for `health`:**
+3. **Optional dependencies for `linux-health.sh`:**
+
+   | Tool | Used for | Package name |
+   |------|----------|--------------|
+   | `smartmontools` | Drive S.M.A.R.T. health | `smartmontools` |
+   | `lm_sensors` | CPU/disk temperatures | `lm_sensors` (Arch/Fedora/openSUSE), `lm-sensors` (Debian/Ubuntu) |
+   | `pciutils` | GPU model names | `pciutils` |
+   | `curl` or `wget` | Public IP lookup (`--ip`) | `curl` / `wget` |
+
+   Install them with your distro's package manager:
    ```bash
-   sudo pacman -S lm_sensors smartmontools
+   sudo pacman -S lm_sensors smartmontools pciutils                 # Arch / CachyOS
+   sudo apt install lm-sensors smartmontools pciutils               # Debian / Ubuntu
+   sudo dnf install lm_sensors smartmontools pciutils               # Fedora / RHEL
+   sudo zypper install sensors smartmontools pciutils               # openSUSE
+   sudo apk add lm-sensors smartmontools pciutils                   # Alpine
+   sudo xbps-install lm_sensors smartmontools pciutils              # Void
+   ```
+   Then detect your sensors once:
+   ```bash
    sudo sensors-detect --auto
    ```
    *(Optional)* Allow passwordless S.M.A.R.T. checks without running `sudo health`:
    ```bash
-   echo "\$USER ALL=(ALL) NOPASSWD: /usr/bin/smartctl" | sudo tee /etc/sudoers.d/smartctl > /dev/null
+   echo "$USER ALL=(ALL) NOPASSWD: $(command -v smartctl)" | sudo tee /etc/sudoers.d/smartctl > /dev/null
    ```
