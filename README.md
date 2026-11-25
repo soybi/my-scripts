@@ -89,7 +89,7 @@ Automated setup script that installs a 1-click Light/Dark theme switcher (`~/.lo
 ```bash
 ./setup-toggle-xfce-theme.sh                  # Install toggle script and add panel launcher
 ./revert-toggle-xfce-theme.sh                 # Remove toggle script and panel launcher
-./revert-toggle-xfce-theme.sh --reset-theme   # Remove everything and reset to Adwaita-dark
+./revert-toggle-xfce-theme.sh --reset-theme   # Remove everything and reset to default dark theme (Greybird-dark/elementary-xfce-dark on Xubuntu, Adwaita-dark/elementary fallback)
 ```
 
 ## Quick Installation
@@ -153,7 +153,7 @@ mkdir -p ~/.local/bin && curl -fsSL https://github.com/soybi/my-scripts/raw/main
   ```bash
   bash -c "$(curl -fsSL https://github.com/soybi/my-scripts/raw/main/revert-toggle-xfce-theme.sh)"
   ```
-* **Revert & Reset Theme to Adwaita-dark:**
+* **Revert & Reset Theme to Default Dark (`Greybird-dark` on Xubuntu, `Adwaita-dark` fallback):**
   ```bash
   bash -c "$(curl -fsSL https://github.com/soybi/my-scripts/raw/main/revert-toggle-xfce-theme.sh)" -- --reset-theme
   ```
