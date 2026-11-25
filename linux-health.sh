@@ -37,7 +37,7 @@ while [[ $# -gt 0 ]]; do
             for rc in "$HOME/.bashrc" "$HOME/.zshrc"; do
                 if [ -f "$rc" ] && ! grep -qE '(\$HOME|~)/\.local/bin' "$rc"; then
                     printf '
-export PATH="\$HOME/.local/bin:\$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 ' >> "$rc"
                 fi
             done
@@ -47,7 +47,7 @@ export PATH="\$HOME/.local/bin:\$PATH"
             echo "Installed: $HOME/.local/bin/health -> $SCRIPT_PATH"
             case ":$PATH:" in
                 *":$HOME/.local/bin:"*) echo "Ready! Type 'health' in your terminal to run." ;;
-                *) echo "Note: Restart your terminal (or run: export PATH="\$HOME/.local/bin:\$PATH") and type 'health'." ;;
+                *) echo "Note: Restart your terminal (or run: export PATH=$HOME/.local/bin:$PATH) and type 'health'." ;;
             esac
             exit 0
             ;;
