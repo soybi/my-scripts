@@ -66,17 +66,31 @@ fi
 
 # 5. Optional theme reset to default dark preset
 if [ "${1:-}" = "--reset-theme" ]; then
-    xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita-dark"
-    xfconf-query -c xsettings -p /Net/IconThemeName -s "elementary"
-    xfconf-query -c xfwm4 -p /general/theme -s "Adwaita-dark"
+    if [ -d "/usr/share/themes/Greybird-dark" ]; then
+        DEFAULT_DARK_GTK="Greybird-dark"
+    else
+        DEFAULT_DARK_GTK="Adwaita-dark"
+    fi
+
+    if [ -d "/usr/share/icons/elementary-xfce-dark" ]; then
+        DEFAULT_DARK_ICONS="elementary-xfce-dark"
+    elif [ -d "/usr/share/icons/elementary-xfce" ]; then
+        DEFAULT_DARK_ICONS="elementary-xfce"
+    else
+        DEFAULT_DARK_ICONS="elementary"
+    fi
+
+    xfconf-query -c xsettings -p /Net/ThemeName -s "$DEFAULT_DARK_GTK"
+    xfconf-query -c xsettings -p /Net/IconThemeName -s "$DEFAULT_DARK_ICONS"
+    xfconf-query -c xfwm4 -p /general/theme -s "$DEFAULT_DARK_GTK"
     if command -v gsettings >/dev/null 2>&1; then
         gsettings set org.gnome.desktop.interface color-scheme "prefer-dark" 2>/dev/null || true
-        gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark" 2>/dev/null || true
+        gsettings set org.gnome.desktop.interface gtk-theme "$DEFAULT_DARK_GTK" 2>/dev/null || true
     elif command -v dconf >/dev/null 2>&1; then
         dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'" 2>/dev/null || true
-        dconf write /org/gnome/desktop/interface/gtk-theme "'Adwaita-dark'" 2>/dev/null || true
+        dconf write /org/gnome/desktop/interface/gtk-theme "'$DEFAULT_DARK_GTK'" 2>/dev/null || true
     fi
-    echo "Reset theme to Adwaita-dark / elementary"
+    echo "Reset theme to $DEFAULT_DARK_GTK / $DEFAULT_DARK_ICONS"
 fi
 
 echo "Reversal complete."

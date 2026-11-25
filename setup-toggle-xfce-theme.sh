@@ -9,10 +9,21 @@ mkdir -p "$BIN_DIR"
 cat << 'EOF' > "$SCRIPT_PATH"
 #!/usr/bin/env bash
 
-FALLBACK_LIGHT_GTK="Adwaita"
-FALLBACK_DARK_GTK="Adwaita-dark"
-FALLBACK_LIGHT_ICONS="elementary"
-FALLBACK_DARK_ICONS="elementary"
+if [ -d "/usr/share/themes/Greybird" ]; then
+    FALLBACK_LIGHT_GTK="Greybird"
+    FALLBACK_DARK_GTK="Greybird-dark"
+else
+    FALLBACK_LIGHT_GTK="Adwaita"
+    FALLBACK_DARK_GTK="Adwaita-dark"
+fi
+
+if [ -d "/usr/share/icons/elementary-xfce" ]; then
+    FALLBACK_LIGHT_ICONS="elementary-xfce"
+    FALLBACK_DARK_ICONS="elementary-xfce-dark"
+else
+    FALLBACK_LIGHT_ICONS="elementary"
+    FALLBACK_DARK_ICONS="elementary"
+fi
 
 theme_exists() {
     local name="$1"
