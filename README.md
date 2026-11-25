@@ -7,6 +7,7 @@ A personal collection of Bash utilities, hardware workarounds, and automated sys
 ## Included Scripts
 
 ### 1. `linux-health.sh` — Cross-Distro Linux System Health Reporter
+![linux-health.sh Demo](assets/linux-health-demo.gif)
 A lightweight, dependency-minimal terminal diagnostic tool that works on **any mainstream Linux distribution**: Arch/CachyOS, Debian/Ubuntu, Fedora/RHEL, openSUSE, Alpine, Void, and their derivatives. It uses optional tools when they are installed and skips them gracefully when they are not, so it runs cleanly on minimal installs, VMs, and containers too.
 
 **Features:**
