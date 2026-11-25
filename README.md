@@ -4,6 +4,17 @@ A personal collection of Bash utilities, hardware workarounds, and automated sys
 
 ---
 
+## Table of Contents
+
+- [Included Scripts](#included-scripts)
+  - [1. linux-health.sh — Cross-Distro Linux System Health Reporter](#1-linux-healthsh--cross-distro-linux-system-health-reporter)
+  - [2. Scroll Lock LED Setup (Debian & CachyOS XFCE)](#2-scroll-lock-led-setup-debian--cachyos-xfce)
+  - [3. setup-gt630m-tf2.sh](#3-setup-gt630m-tf2sh)
+  - [4. revert-all-nvidia-setup.sh & revert-all-nvidia-setup-v2.sh](#4-revert-all-nvidia-setupsh--revert-all-nvidia-setup-v2sh)
+  - [5. setup-headless-server.sh](#5-setup-headless-serversh)
+  - [6. setup-toggle-xfce-theme.sh & revert-toggle-xfce-theme.sh](#6-setup-toggle-xfce-themesh--revert-toggle-xfce-themesh)
+- [Quick Installation](#quick-installation)
+
 ## Included Scripts
 
 ### 1. `linux-health.sh` — Cross-Distro Linux System Health Reporter
