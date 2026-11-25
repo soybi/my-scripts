@@ -133,3 +133,57 @@ Automated setup script that installs a 1-click Light/Dark theme switcher (`~/.lo
    ```bash
    echo "$USER ALL=(ALL) NOPASSWD: $(PATH=\"$PATH:/usr/sbin:/sbin\" command -v smartctl)" | sudo tee /etc/sudoers.d/smartctl > /dev/null
    ```
+
+## Quick Installation (Standalone — No Git Required)
+
+Run any single command below to download and execute only the script you need.
+
+### 1. System Health Reporter (`linux-health.sh` -> `health`)
+Downloads `linux-health.sh` to `~/.local/bin` and symlinks it as `health`:
+```bash
+mkdir -p ~/.local/bin && curl -fsSL https://githubusercontent.com -o ~/.local/bin/linux-health.sh && chmod +x ~/.local/bin/linux-health.sh && ~/.local/bin/linux-health.sh --install
+```
+
+### 2. XFCE 1-Click Theme Toggle
+* **Install:**
+  ```bash
+  bash -c "\$(curl -fsSL https://githubusercontent.com)"
+  ```
+* **Revert:**
+  ```bash
+  bash -c "\$(curl -fsSL https://githubusercontent.com)"
+  ```
+* **Revert & Reset Theme to Adwaita-dark:**
+  ```bash
+  bash -c "\$(curl -fsSL https://githubusercontent.com)" -- --reset-theme
+  ```
+
+### 3. Scroll Lock LED Setup
+* **CachyOS / XFCE + LightDM** *(fetches only the `cachyos-xfce-scrolllock-led` subfolder)*:
+  ```bash
+  TMP_DIR=\$(mktemp -d) && curl -fsSL https://github.com | tar -xz -C "\(TMP_DIR" --strip-components=1 my-scripts-main/cachyos-xfce-scrolllock-led && cd "\)TMP_DIR/cachyos-xfce-scrolllock-led" && chmod +x *.sh && ./setup-scrolllock-led.sh
+  ```
+* **Debian / XFCE:**
+  ```bash
+  bash -c "\$(curl -fsSL https://githubusercontent.com)"
+  ```
+
+### 4. NVIDIA GeForce GT 630M Setup & Revert
+* **Setup GT 630M for TF2:**
+  ```bash
+  bash -c "\$(curl -fsSL https://githubusercontent.com)"
+  ```
+* **Revert All NVIDIA Setup (v2 — Recommended):**
+  ```bash
+  bash -c "\$(curl -fsSL https://githubusercontent.com)"
+  ```
+* **Revert All NVIDIA Setup (v1 — Legacy):**
+  ```bash
+  bash -c "\$(curl -fsSL https://githubusercontent.com)"
+  ```
+
+### 5. Headless Debian Home Server Setup
+```bash
+bash -c "\$(curl -fsSL https://githubusercontent.com)"
+```
+
