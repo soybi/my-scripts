@@ -131,7 +131,7 @@ Automated setup script that installs a 1-click Light/Dark theme switcher (`~/.lo
    ```
    *(Optional)* Allow passwordless S.M.A.R.T. checks without running `sudo health`:
    ```bash
-   echo "$USER ALL=(ALL) NOPASSWD: $(PATH=\"$PATH:/usr/sbin:/sbin\" command -v smartctl)" | sudo tee /etc/sudoers.d/smartctl > /dev/null
+   echo "$USER ALL=(ALL) NOPASSWD: $(PATH="$PATH:/usr/sbin:/sbin" command -v smartctl)" | sudo tee /etc/sudoers.d/smartctl > /dev/null
    ```
 
 ## Quick Installation (Standalone — No Git Required)
