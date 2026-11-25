@@ -44,16 +44,19 @@ NO_COLOR=1 linux-health.sh       # Disable colored output
 
 ---
 
-### 2. `debian-scrolllock-led.sh` and `cachyos-xfce-scrolllock-led-bundle.zip`
-Configures keyboard Scroll Lock LED toggling on X11/XFCE desktop environments (commonly required for backlit budget/gaming keyboards on Linux).
+### 2. Scroll Lock LED Setup (Debian & CachyOS XFCE)
 
-**Usage:**
-```bash
-chmod +x debian-scrolllock-led.sh
-./debian-scrolllock-led.sh
-```
+Configures external keyboard Scroll Lock LED toggling on X11/XFCE desktop environments (commonly required for backlit budget/gaming keyboards on Linux).
 
----
+- **CachyOS / XFCE + LightDM:** See [`cachyos-xfce-scrolllock-led/`](cachyos-xfce-scrolllock-led/) for automated setup/revert scripts and guide.
+  ```bash
+  cd cachyos-xfce-scrolllock-led
+  ./setup-scrolllock-led.sh
+  ```
+- **Debian / XFCE:**
+  ```bash
+  ./debian-scrolllock-led.sh
+  ```
 
 ### 3. `setup-gt630m-tf2.sh`
 Configures legacy NVIDIA GeForce GT 630M drivers and Optimus/hybrid graphics offloading specifically tuned for running *Team Fortress 2* on Linux.
