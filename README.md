@@ -88,7 +88,7 @@ Automated setup script that installs a 1-click Light/Dark theme switcher (`~/.lo
 
 2. **Make scripts executable and auto-install `linux-health.sh` as `health`:**
    ```bash
-   chmod +x ~/my-scripts/*
+   chmod +x ~/my-scripts/*.sh ~/my-scripts/cachyos-xfce-scrolllock-led/*.sh
    ~/my-scripts/linux-health.sh --install
    ```
    *(Symlinks `~/.local/bin/health` and automatically adds `~/.local/bin` to `PATH` for Bash, Zsh, and Fish.)*
